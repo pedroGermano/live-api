@@ -1,0 +1,28 @@
+import { Request, Response } from "express";
+import { CreateTask, CompleteTask } from "../userCases/Task/";
+
+export default class TaskController {
+  constructor(
+    readonly createTask: CreateTask,
+    readonly completeTask: CompleteTask
+  ) {}
+
+  create(req: Request, res: Response) {
+    const { title } = req.body;
+
+    const task = this.createTask.execute(title);
+
+    res.status(200).json({
+      task: task
+    })
+  }
+
+  complete(req: Request, res: Response){
+    const { id: taskId } = req.params;
+    const task = this.completeTask.execute(taskId);
+
+    res.status(201).json({
+      task: task
+    })
+  }
+}
