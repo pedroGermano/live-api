@@ -17,9 +17,10 @@ export default class TaskController {
     })
   }
 
-  complete(req: Request, res: Response){
+  async complete(req: Request, res: Response){
     const { id: taskId } = req.params;
-    const task = this.completeTask.execute(taskId);
+
+    const task = await this.completeTask.execute(taskId);
 
     res.status(201).json({
       task: task

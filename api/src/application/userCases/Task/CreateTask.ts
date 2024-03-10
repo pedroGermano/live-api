@@ -1,9 +1,14 @@
-export  class CreateTask {
-  constructor() {}
+import Task from "../../../domain/entity/Task";
+import TaskRepository from "../../repository/TaskRepository";
 
-  execute(title: string){
+export class CreateTask {
+  constructor(readonly taskRepository: TaskRepository) {}
 
-    console.log("task create")
+  execute(title: string) {
+    const task = Task.create(title);
 
+    this.taskRepository.create(task);
+
+    return task
   }
 }

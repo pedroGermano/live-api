@@ -2,9 +2,12 @@ import express from "express";
 import cors from "cors";
 import TaskController from "./application/controller/TaskController";
 import { CreateTask, CompleteTask } from './application/userCases/Task'
+import TaskRepository from "./application/repository/TaskRepository";
 
-const createTask = new CreateTask();
-const completeTask = new CompleteTask();
+const taskRepository = new TaskRepository();
+
+const createTask = new CreateTask(taskRepository);
+const completeTask = new CompleteTask(taskRepository);
 const taskController = new TaskController(createTask, completeTask)
 
 

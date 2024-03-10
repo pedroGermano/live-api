@@ -1,6 +1,7 @@
 import crypto from 'crypto'
 
 export default class Task {
+  done?: boolean = false
   constructor(
     readonly id: string,
     readonly title: string,
@@ -13,4 +14,7 @@ export default class Task {
     return new Task(taskId, title, new Date());
   }
 
+  complete(){
+    this.done = true;
+  }
 }
