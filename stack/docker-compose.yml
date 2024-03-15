@@ -1,29 +1,30 @@
-version: '3'
-
+version: "3.8"
 services:
-  teste-postgres-compose:
-    image: postgres
+  dcs-postgres:
+    image: postgres:15.3-alpine
+    container_name: dcs-postgres
+    restart: always
     environment:
-      POSTGRES_PASSWORD: "Postgres2019!"
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
     ports:
-      - "15432:5432"
+      - 5432:5432
     volumes:
-      - /home/renatogroffe/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
-    networks:
-      - postgres-compose-network
-      
-  teste-pgadmin-compose:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "pedrogermano232@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "senhas@1234"
-    ports:
-      - "16543:80"
+      - /home/pedro-germano/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
+  dcs-pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: dcs-pgadmin
+    restart: always
     depends_on:
-      - teste-postgres-compose
-    networks:
-      - postgres-compose-network
+      - dcs-postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@localhost.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - "8080:80"
+    volumes:
+      - /home/pedro-germano/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
 
 networks: 
-  postgres-compose-network:
+   dcs-postgres:
     driver: bridge
