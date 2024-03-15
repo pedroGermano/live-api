@@ -9,8 +9,8 @@ const config: { [key: string]: Knex.Config } = {
       host: "localhost",
       database: "db_app_tasks",
       user: "postgres",
-      password: "password"
-    }
+      password: "postgres",
+    },
   },
 
   staging: {

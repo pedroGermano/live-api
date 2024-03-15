@@ -1,23 +1,33 @@
-import Task from '../../domain/entity/Task'
+import Task from "../../domain/entity/Task";
 
-export default class TaskRepository{
-  constructor() {
+export default class TaskRepository {
+  constructor(readonly dbConnection: any) {}
 
-  }
-
-  async create(task: Task): Promise<void>{
-
-    console.log('task created on database')
+  async create(task: Task): Promise<void> {
+    await this.dbConnection("task").insert({
+      id: task.id,
+      title: task.title,
+      created_at: task.createdAt,
+    });
   }
 
   async complete(task: Task): Promise<void> {
-    console.log('task completed on database')
-
-    
+    await this.dbConnection("task").where({ id: task.id }).update({
+      done: task.done,
+      updatedAt: task.updatedAt,
+    });
   }
 
   async getOne(taskId: string): Promise<Task> {
-    console.log("task getted on database")
-    return new Task("1", "title", new Date())
+    const taskData = await this.dbConnection("task")
+      .where({ id: taskId })
+      .first();
+    const task = new Task(
+      taskData.id,
+      taskData.title,
+      taskData.createAt,
+      taskData.updatedAt
+    );
+    return new Task("1", "title", new Date());
   }
 }

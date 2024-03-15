@@ -2,13 +2,14 @@ import Task from "../../../domain/entity/Task";
 import TaskRepository from "../../repository/TaskRepository";
 
 export class CreateTask {
-  constructor(readonly taskRepository: TaskRepository) {}
+  constructor(private readonly taskRepository: TaskRepository) {}
 
-  execute(title: string) {
+  async execute(title: string): Promise<Task> {
     const task = Task.create(title);
 
-    this.taskRepository.create(task);
+    await this.taskRepository.create(task);
+    console.log("task created");
 
-    return task
+    return task;
   }
 }

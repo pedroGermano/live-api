@@ -1,20 +1,24 @@
-import crypto from 'crypto'
+import crypto from "crypto";
 
 export default class Task {
-  done?: boolean = false
+  done?: boolean = false;
+  updatedAt?: Date;
+
   constructor(
     readonly id: string,
     readonly title: string,
     readonly createdAt: Date,
-  ){}
+    updatedAt?: Date
+  ) {}
 
-  static create(title: string){
-    const taskId = crypto.randomUUID()
-    
+  static create(title: string) {
+    const taskId = crypto.randomUUID();
+
     return new Task(taskId, title, new Date());
   }
 
-  complete(){
+  complete() {
     this.done = true;
+    this.updatedAt = new Date();
   }
 }
