@@ -14,7 +14,7 @@ export default class TaskRepository {
   async complete(task: Task): Promise<void> {
     await this.dbConnection("task").where({ id: task.id }).update({
       done: task.done,
-      updatedAt: task.updatedAt,
+      updated_at: task.updatedAt,
     });
   }
 
@@ -28,6 +28,6 @@ export default class TaskRepository {
       taskData.createAt,
       taskData.updatedAt
     );
-    return new Task("1", "title", new Date());
+    return  task;
   }
 }

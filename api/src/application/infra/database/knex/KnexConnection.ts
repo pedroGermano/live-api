@@ -4,7 +4,7 @@ export default class KnexConnection {
   private readonly connection: Knex;
 
   constructor() {
-    const configParamas: Knex.Config = {
+    const configParams: Knex.Config = {
       client: "pg",
       connection: {
         host: "localhost",
@@ -15,7 +15,7 @@ export default class KnexConnection {
       },
     };
 
-    this.connection = knex(configParamas);
+    this.connection = knex(configParams);
   }
 
   getInstance(): Knex {
